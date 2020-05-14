@@ -37,19 +37,19 @@ export default class Game extends Phaser.Scene {
         })
 
         this.socket.on('dealCards', function () {
-            self.dealer.dealCards();
+            self.dealer.dealCards(4);
             self.dealText.disableInteractive();
         })
         
-        this.socket.on('cardPlayed', function (gameObject, isPlayerA) {
-            if (isPlayerA !== self.isPlayerA) {
-                let sprite = gameObject.textureKey;
-                self.opponentCards.shift().destroy();
-                self.dropZone.data.values.cards++;
-                let card = new Card(self);
-                card.render(((self.dropZone.x - 350) + (self.dropZone.data.values.cards * 50)), (self.dropZone.y), sprite).disableInteractive();
-            }
-        })
+        // this.socket.on('cardPlayed', function (gameObject, isPlayerA) {
+        //     if (isPlayerA !== self.isPlayerA) {
+        //         let sprite = gameObject.textureKey;
+        //         self.opponentCards.shift().destroy();
+        //         self.dropZone.data.values.cards++;
+        //         let card = new Card(self);
+        //         card.render(((self.dropZone.x - 350) + (self.dropZone.data.values.cards * 50)), (self.dropZone.y), sprite).disableInteractive();
+        //     }
+        // })
 
         //Deal cards
         this.dealer = new Dealer(this);
@@ -96,7 +96,7 @@ export default class Game extends Phaser.Scene {
 
         this.input.on('drop', function (pointer, gameObject, dropZone) {
             dropZone.data.values.cards++;
-            gameObject.x = (dropZone.x - 350) + (dropZone.data.values.cards * 50);
+            gameObject.x = (dropZone.x) + (dropZone.data.values.cards);
             gameObject.y = dropZone.y;
             gameObject.disableInteractive();
             self.socket.emit('cardPlayed', gameObject, self.isPlayerA);

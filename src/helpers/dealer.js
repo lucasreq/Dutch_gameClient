@@ -2,7 +2,7 @@ import Card from './card';
 
 export default class Dealer {
     constructor(scene) {
-        this.dealCards = () => {
+        this.dealCards = (cardNumber) => {
             let playerSprite;
             let opponentSprite;
             if (scene.isPlayerA) {
@@ -12,7 +12,7 @@ export default class Dealer {
                 playerSprite = 'magentaCardFront';
                 opponentSprite = 'cyanCardBack';
             };
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < cardNumber; i++) {
                 let playerCard = new Card(scene);
                 playerCard.render(475 + (i * 100), 650, playerSprite);
 
