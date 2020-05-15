@@ -41,11 +41,21 @@ export default class Game extends Phaser.Scene {
             self.dealText.disableInteractive();
         })
         
+        this.socket.on('cardPlayed', function (gameObject, isPlayerA) {
+            if (isPlayerA !== self.isPlayerA) {
+                let sprite = gameObject.textureKey;
+                self.opponentCards.shift().destroy();
+                self.dropZone.data.values.cards++;
+                let card = new Card(self);
+                card.render(((self.dropZone.x - 350) + (self.dropZone.data.values.cards * 50)), (self.dropZone.y), sprite).disableInteractive();
+            }
+        })
 
         //Deal cards
         this.dealer = new Dealer(this);
 
         this.dealText = this.add.text(75, 350, ['DEAL CARDS']).setFontSize(18).setFontFamily('Trebuchet MS').setColor('#00ffff').setInteractive();
+        this.EndTurnText = this.add.text(75, 700, ['END TURN']).setFontSize(18).setFontFamily('Trebuchet MS').setColor('#00ffff').setInteractive();
 
         let self = this;
 
@@ -95,15 +105,6 @@ export default class Game extends Phaser.Scene {
     }
     
     update() {
-
-        // this.socket.on('cardPlayed', function (gameObject, isPlayerA) {
-        //     if (isPlayerA !== self.isPlayerA) {
-        //         let sprite = gameObject.textureKey;
-        //         self.opponentCards.shift().destroy();
-        //         self.dropZone.data.values.cards++;
-        //         let card = new Card(self);
-        //         card.render(((self.dropZone.x - 350) + (self.dropZone.data.values.cards * 50)), (self.dropZone.y), sprite).disableInteractive();
-        //     }
-        // })
+    
     }
 }
