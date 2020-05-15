@@ -16,6 +16,7 @@ export default class Game extends Phaser.Scene {
         this.load.image('cyanCardBack', 'src/assets/CyanCardBack.png');
         this.load.image('magentaCardFront', 'src/assets/MagentaCardFront.png');
         this.load.image('magentaCardBack', 'src/assets/MagentaCardBack.png');
+        this.load.image('backcard','src/assets/backcard.png');
 
     }
 
