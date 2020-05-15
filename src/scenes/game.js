@@ -37,7 +37,7 @@ export default class Game extends Phaser.Scene {
         })
 
         this.socket.on('dealCards', function () {
-            self.dealer.dealCards();
+            self.dealer.dealCards(4);
             self.dealText.disableInteractive();
         })
         
@@ -55,6 +55,7 @@ export default class Game extends Phaser.Scene {
         this.dealer = new Dealer(this);
 
         this.dealText = this.add.text(75, 350, ['DEAL CARDS']).setFontSize(18).setFontFamily('Trebuchet MS').setColor('#00ffff').setInteractive();
+        this.EndTurnText = this.add.text(75, 700, ['END TURN']).setFontSize(18).setFontFamily('Trebuchet MS').setColor('#00ffff').setInteractive();
 
         let self = this;
 
@@ -96,7 +97,7 @@ export default class Game extends Phaser.Scene {
 
         this.input.on('drop', function (pointer, gameObject, dropZone) {
             dropZone.data.values.cards++;
-            gameObject.x = (dropZone.x - 350) + (dropZone.data.values.cards * 50);
+            gameObject.x = (dropZone.x) + (dropZone.data.values.cards);
             gameObject.y = dropZone.y;
             gameObject.disableInteractive();
             self.socket.emit('cardPlayed', gameObject, self.isPlayerA);
