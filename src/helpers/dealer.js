@@ -17,6 +17,13 @@ export default class Dealer {
                 let playerCard = new Card(scene);
                 playerCard.render(300, 350, opponentSprite);
             }
+            for (let i = 0; i < 4; i++){
+                let playerCard = new Card(scene);
+                playerCard.render(475 + (i * 100), 650, playerSprite);
+
+                let opponentCard = new Card(scene);
+                scene.opponentCards.push(opponentCard.render(475 + (i * 100), 125, opponentSprite).disableInteractive());
+            }
         }
     }
 }
